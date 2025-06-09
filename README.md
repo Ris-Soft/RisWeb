@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Vue 3 + Vite + Vuetify 美观模板
 
 本项目是一个基于 Vue 3、Vite 和 Vuetify 的美观模板，包含：
@@ -23,3 +24,7 @@ pnpm run dev
 - 使用 Vuetify 组件实现现代美观的 UI
 - 响应式布局，适配多端
 - 代码结构清晰，便于扩展
+=======
+# RisWeb
+Official Website built with Vuejs
+>>>>>>> bfb6e5507952605d8a6e7346087ee9f12870e6ea
