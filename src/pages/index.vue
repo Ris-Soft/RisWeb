@@ -23,7 +23,7 @@
             <v-btn color="primary" size="large" href="#contact" rounded>
               联系我们
             </v-btn>
-            <v-btn class="ml-5" size="large" href="https://github.com/ris-soft" rounded>
+            <v-btn class="ml-5" size="large" :to="{ path: '/projects' }" rounded>
               开源项目
             </v-btn>
           </v-col>
@@ -70,18 +70,18 @@
 const services = [
   {
     icon: 'mdi-web',
-    title: '网站设计开发',
-    desc: '定制响应式网站，兼顾美观与性能，提升品牌形象。',
+    title: '在线服务开发',
+    desc: '提供方便快捷的在线服务。',
   },
   {
     icon: 'mdi-palette-outline',
-    title: '品牌视觉设计',
-    desc: 'LOGO、VI、宣传物料设计，打造独特品牌识别。',
+    title: '大屏解决方案',
+    desc: '一体机互动交互方案设计。',
   },
   {
     icon: 'mdi-cellphone-link',
-    title: '数字化解决方案',
-    desc: '小程序、H5、企业数字化平台开发，助力业务升级。',
+    title: '桌面应用开发',
+    desc: '以WebUI+Node为核心的桌面开发。',
   },
 ]
 </script>
