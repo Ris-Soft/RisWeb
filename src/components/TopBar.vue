@@ -13,8 +13,9 @@
     <v-navigation-drawer v-model="drawer" app>
         <v-list nav activatable>
             <v-list-item :to="'/'" link title="官网首页" prepend-icon="mdi-home-outline"></v-list-item>
-            <v-list-item :to="'/about'" link title="关于我们" prepend-icon="mdi-information-outline"></v-list-item>
-            <v-list-item :to="'/contact'" link title="联系我们" prepend-icon="mdi-phone-outline"></v-list-item>
+            <v-list-item link title="项目列表" prepend-icon="mdi-view-list-outline" @click="openLink('https://app.3r60.top')"></v-list-item>
+            <v-list-item link title="文档中心" prepend-icon="mdi-file-document-outline" @click="openLink('https://docs.3r60.top')"></v-list-item>
+            <v-list-item link title="用户系统" prepend-icon="mdi-account-outline" @click="openLink('https://user.3r60.top')"></v-list-item>
         </v-list>
     </v-navigation-drawer>
 </template>

@@ -4,14 +4,7 @@
       <!-- Logo & Studio Name -->
       <v-row align="center" class="mb-6" style="margin-top: 10vh">
         <v-col cols="auto">
-          <v-img
-        class="mr-4"
-        height="80"
-        width="80"
-        src="@/assets/logo.png"
-        alt="Studio Logo"
-        rounded="circle"
-          />
+          <v-img class="mr-4" height="80" width="80" src="@/assets/logo.png" alt="Studio Logo" rounded="circle" />
         </v-col>
         <v-col>
           <h1 class="text-h3 font-weight-bold mb-1">腾瑞思智</h1>
@@ -20,30 +13,19 @@
       </v-row>
 
       <!-- Welcome Card -->
-      <v-card
-        class="mb-8"
-        color="surface-variant"
-        rounded="lg"
-        variant="tonal"
-      >
+      <v-card class="mb-8" color="surface-variant" rounded="lg" variant="tonal">
         <v-row no-gutters>
           <v-col cols="12" md="8" class="pa-6">
-            <h2 class="text-h5 font-weight-bold mb-2">欢迎来到极致创意工作室</h2>
+            <h2 class="text-h5 font-weight-bold mb-2">欢迎来到腾瑞思智工作室</h2>
             <div class="text-body-1 mb-4">
-              我们专注于高端网站设计、品牌视觉、前端开发与数字化解决方案。以创新为驱动，助力企业实现数字化转型。
+              我们专注于程序设计与前端开发。以创新为驱动。
             </div>
             <v-btn color="primary" size="large" href="#contact" rounded>
               联系我们
             </v-btn>
-          </v-col>
-          <v-col cols="12" md="4" class="d-flex align-center justify-center">
-            <v-img
-              src="https://cdn.vuetifyjs.com/docs/images/one/create/feature.png"
-              height="120"
-              width="120"
-              alt="创意"
-              class="rounded-lg"
-            />
+            <v-btn class="ml-5" size="large" href="https://github.com/ris-soft" rounded>
+              开源项目
+            </v-btn>
           </v-col>
         </v-row>
       </v-card>
@@ -52,12 +34,7 @@
       <h2 class="text-h5 font-weight-bold mb-4 text-center">我们的服务</h2>
       <v-row>
         <v-col v-for="service in services" :key="service.title" cols="12" md="4">
-          <v-card
-            class="py-6 px-4"
-            color="surface-variant"
-            rounded="lg"
-            variant="tonal"
-          >
+          <v-card class="py-6 px-4" color="surface-variant" rounded="lg" variant="tonal">
             <v-icon size="36" color="primary" class="mb-3">{{ service.icon }}</v-icon>
             <h3 class="text-h6 font-weight-bold mb-2">{{ service.title }}</h3>
             <div class="text-body-2">{{ service.desc }}</div>
@@ -71,7 +48,7 @@
           <v-card color="surface-variant" rounded="lg" variant="tonal" class="pa-6">
             <h2 class="text-h6 font-weight-bold mb-2">关于我们</h2>
             <div class="text-body-2">
-              极致创意工作室由一群热爱设计与技术的专业人士组成，致力于为客户提供一站式数字化服务。我们相信每一个项目都值得被用心打造。
+              腾瑞思智目前仅有几个学生组成，致力于为提供一站式数字化服务。我们相信每一个项目都值得被用心打造。
             </div>
           </v-card>
         </v-col>
@@ -79,12 +56,9 @@
           <v-card color="surface-variant" rounded="lg" variant="tonal" class="pa-6">
             <h2 class="text-h6 font-weight-bold mb-2">联系我们</h2>
             <div class="text-body-2 mb-2">
-              邮箱：<a href="mailto:info@studio.com">info@studio.com</a><br>
-              电话：123-456-7890
+              邮箱：<a href="mailto:info@studio.com">e-pylxu@outlook.com</a><br>
+              群聊：<a href="https://qm.qq.com/q/3swohB3zsQ" target="_blank">939571490</a><br>
             </div>
-            <v-btn color="primary" variant="outlined" href="mailto:info@studio.com" rounded>
-              发送邮件
-            </v-btn>
           </v-card>
         </v-col>
       </v-row>
