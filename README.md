@@ -75,6 +75,24 @@ This project is built with [Vuetify](https://vuetifyjs.com/en/), a UI Library wi
 - [Becoming a subscriber on Tidelift](https://tidelift.com/subscription/npm/vuetify)
 - [Making a one-time donation with Paypal](https://paypal.me/vuetify)
 
+## 项目部署
+
+项目采用GitHub Actions自动化部署，流程如下：
+1. 监听main分支的push事件
+2. 使用ubuntu-latest运行器执行以下步骤：
+   - 拉取代码
+   - 配置Node.js环境（版本20）
+   - 安装pnpm依赖
+   - 执行项目构建
+   - 通过SSH将dist/目录部署到远程服务器
+
+### SSH密钥配置
+需在GitHub仓库的Secrets中配置以下参数：
+- SSH_PRIVATE_KEY: SSH私钥
+- REMOTE_HOST: 远程服务器地址
+- REMOTE_USER: 登录用户名
+- REMOTE_PATH: 服务器目标路径
+
 ## 📑 License
 [MIT](http://opensource.org/licenses/MIT)
 
