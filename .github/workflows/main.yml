@@ -6,11 +6,10 @@ on:
       - main
 
 jobs:
-  # 发布到服务器
   build-and-deploy-to-server:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@master
 
       - name: Setup Node.js environment
@@ -28,7 +27,17 @@ jobs:
         env:
           CI: true
 
-      - name: Deploy to Server
+      - name: Set up SSH directory
+        run: mkdir -p ~/.ssh && chmod 700 ~/.ssh
+
+      - name: Delete remote assets folder
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} \
+            "rm -rf ${TARGET%/}/assets"
+        env:
+          TARGET: ${{ secrets.REMOTE_TARGET }}
+
+      - name: Deploy to Server via rsync
         uses: easingthemes/ssh-deploy@v2.1.2
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
