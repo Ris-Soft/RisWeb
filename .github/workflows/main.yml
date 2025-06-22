@@ -16,20 +16,15 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
-
-      - name: Install Dependencies Manager
-        run: npm install pnpm -g
-        env:
-          CI: true
+          node-version: 22.x
 
       - name: Install Dependencies
-        run: pnpm install
+        run: npm install
         env:
           CI: true
 
       - name: Build Project
-        run: pnpm run build
+        run: npm run build
         env:
           CI: true
 
