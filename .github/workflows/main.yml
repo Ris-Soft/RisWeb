@@ -26,7 +26,7 @@ jobs:
       run: pnpm build
 
     - name: Deploy via SSH
-      uses: easingthemes/ssh-deploy@v4.3.5
+      uses: easingthemes/ssh-deploy
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
