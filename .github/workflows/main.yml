@@ -19,7 +19,7 @@ jobs:
           node-version: 12.x
 
       - name: Install Dependencies Manager
-        run: npm install pnpm
+        run: npm install pnpm -g
         env:
           CI: true
 
