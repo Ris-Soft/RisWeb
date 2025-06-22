@@ -13,7 +13,7 @@
         <v-col class="text-caption text-disabled text-wrap" cols="12" md>
           <div class="d-flex flex-wrap justify-end" style="gap: 8px;">
             <a href="https://beian.miit.gov.cn/" class="text-disabled">陕ICP备2024024321号-4</a>
-            <a href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=61040202000101"
+            <a href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=61019002003234"
               class="text-disabled">陕公网安备61019002003234号</a>
             <a href="https://docs.3r60.top/article/sqjzx19c/" class="text-disabled">用户协议</a>
             <span>
