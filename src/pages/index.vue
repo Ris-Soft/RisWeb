@@ -81,7 +81,7 @@ const services = [
   {
     icon: 'mdi-cellphone-link',
     title: '桌面应用开发',
-    desc: '以WebUI+Node为核心的桌面开发。',
+    desc: '以WebUI+Node为核心的应用开发。',
   },
 ]
 </script>
