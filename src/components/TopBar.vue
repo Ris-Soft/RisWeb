@@ -4,10 +4,9 @@
         <v-img src="/favicon.ico" alt="Logo" max-width="32" class="ml-1" contain></v-img>
         <v-toolbar-title>腾瑞思智</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn v-for="item in menuItems" @click="openLink(item.link)" icon class="mx-1 mr-1" :title="item.title"
-            target="_blank">
-            <v-icon>{{ item.icon }}</v-icon>
-        </v-btn>
+        <v-btn v-for="item in menuItems" @click="handleMenuClick(item)" icon class="mx-1 mr-1" :title="item.title">
+    <v-icon>{{ item.icon }}</v-icon>
+</v-btn>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" app>
@@ -15,22 +14,44 @@
             <v-list-item :to="'/'" link title="官网首页" prepend-icon="mdi-home-outline"></v-list-item>
             <v-list-item :to="'/projects'" link title="项目列表" prepend-icon="mdi-view-list-outline"></v-list-item>
             <v-list-item :to="'/docs'" link title="文档中心" prepend-icon="mdi-file-document-outline"></v-list-item>
-            <v-list-item link title="用户系统" prepend-icon="mdi-account-outline" @click="openLink('https://user.3r60.top')"></v-list-item>
+            <v-list-item v-if="appStore.user" :to="'/user'" link title="用户系统" prepend-icon="mdi-account-outline"></v-list-item>
         </v-list>
     </v-navigation-drawer>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useAppStore } from '@/stores/app';
+import { login, logout } from '@/plugins/casdoor';
+import { useRouter } from 'vue-router';
 
+const appStore = useAppStore();
+const router = useRouter();
 let drawer = ref(true);
 
-const menuItems = ref([
-    { title: '', link: 'https://docs.3r60.top', icon: 'mdi-help-circle-outline' },
-    { title: '', link: 'https://user.3r60.top', icon: 'mdi-login' }
-])
+// 根据登录状态显示不同菜单项
+const menuItems = computed(() => [
+  { title: '文档中心', link: 'https://docs.3r60.top', icon: 'mdi-help-circle-outline' },
+  ...(appStore.user ? [
+    { title: '用户中心', link: '/user', icon: 'mdi-account-circle' },
+    { title: '退出登录', action: 'logout', icon: 'mdi-logout' }
+  ] : [
+    { title: '登录', action: 'login', icon: 'mdi-login' }
+  ])
+]);
 
-function openLink(link: string) {
-    window.open(link, '_blank')
-}  
+// 处理菜单点击事件
+function handleMenuClick(item: any) {
+  if (item.action === 'login') {
+    login();
+  } else if (item.action === 'logout') {
+    logout();
+  } else if (item.link) {
+    if (item.link.startsWith('/')) {
+      router.push(item.link);
+    } else {
+      window.open(item.link, '_blank');
+    }
+  }
+}
 </script>
