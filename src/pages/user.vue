@@ -6,42 +6,30 @@
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text>
-        <v-row v-if="user" align="center" class="mb-4">
-          <v-col cols="12" md="4" class="text-center d-flex flex-column align-center justify-center pb-md-0 pb-4">
+        <v-row v-if="hasAccessToken" align="center" class="mb-4 justify-center">
+          <v-col cols="12" md="12" class="text-center d-flex flex-column align-center justify-center pb-md-0 pb-4">
             <v-avatar size="96" class="mx-auto mb-2 mb-md-3">
-              <v-img :src="user.avatar || 'https://api.dicebear.com/7.x/identicon/svg?seed=' + (user.username || 'user')" alt="用户头像"></v-img>
+              <v-img v-if="user && user.avatar" :src="user.avatar" alt="已登录用户"></v-img>
             </v-avatar>
-            <div class="mb-1 text-h6 font-weight-bold">{{ user.name || user.username }}</div>
-            <div class="text-body-2 text-grey">{{ user.email || '未设置邮箱' }}</div>
-          </v-col>
-          <v-col cols="12" md="8" class="d-flex flex-column justify-center">
-            <v-list density="compact" class="mb-2">
-              <v-list-item>
-                <v-list-item-icon><v-icon>mdi-account</v-icon></v-list-item-icon>
-                <v-list-item-content>用户名: {{ user.username }}</v-list-item-content>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-icon><v-icon>mdi-at</v-icon></v-list-item-icon>
-                <v-list-item-content>邮箱: {{ user.email || '未设置' }}</v-list-item-content>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-icon><v-icon>mdi-calendar</v-icon></v-list-item-icon>
-                <v-list-item-content>创建时间: {{ formatDate(user.createdAt) || '未知' }}</v-list-item-content>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-icon><v-icon>mdi-shield</v-icon></v-list-item-icon>
-                <v-list-item-content>角色: {{ user.role || '普通用户' }}</v-list-item-content>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-icon><v-icon>mdi-key</v-icon></v-list-item-icon>
-                <v-list-item-content>授权范围: {{ user.scope || 'read' }}</v-list-item-content>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-icon><v-icon>mdi-clock-outline</v-icon></v-list-item-icon>
-                <v-list-item-content>最后登录: {{ formatDate(user.lastLogin) || '从未登录' }}</v-list-item-content>
-              </v-list-item>
-            </v-list>
-            <div class="mt-2 text-body-1 text-grey-darken-1">{{ user.bio || '暂无个人简介' }}</div>
+            <template v-if="loading">
+              <v-progress-circular indeterminate size="40"></v-progress-circular>
+              <p class="mt-2">加载用户信息中...</p>
+            </template>
+            <template v-else-if="error">
+              <v-alert type="error" dense>{{ error }}</v-alert>
+            </template>
+            <template v-else-if="user">
+              <div class="mb-1 text-h6 font-weight-bold">{{ user.name }}</div>
+              <div class="text-body-2 text-grey">{{ user.email }}</div>
+              <div class="text-caption text-grey mt-4">
+                用户名: {{ user.owner }} | 注册时间: {{ user.createdTime }} 
+              </div>
+            </template>
+            <template v-else>
+              <div class="mb-1 text-h6 font-weight-bold">已登录用户</div>
+              <div class="text-body-2 text-grey">使用访问令牌进行授权</div>
+            </template>
+            <v-btn color="primary" variant="elevated" @click="gotoCasdoorProfile" class="mt-6">编辑个人信息</v-btn>
           </v-col>
         </v-row>
 
@@ -56,17 +44,44 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { useAppStore } from '@/stores/app';
-import { login } from '@/plugins/casdoor';
+import { login, getUserInfoFromToken, casdoorConfig } from '@/plugins/casdoor';
 
 const appStore = useAppStore();
-const user = computed(() => appStore.user);
 
-// 格式化日期
-const formatDate = (dateString?: string) => {
-  if (!dateString) return null;
-  const date = new Date(dateString);
-  return date.toLocaleString();
+const gotoCasdoorProfile = () => {
+  if (user.value) {
+    const profileUrl = `${casdoorConfig.serverUrl}/account/${user.value.id}`;
+    window.location.href = profileUrl;
+  }
 };
+const hasAccessToken = computed(() => !!appStore.accessToken);
+const user:any = ref(null);
+const loading = ref(true);
+const error = ref(null);
+
+const fetchUserInfo = async () => {
+  if (hasAccessToken.value) {
+    loading.value = true;
+    try {
+      // 使用casdoor.ts中的方法从token解析用户信息
+      user.value = appStore.accessToken ? getUserInfoFromToken(appStore.accessToken) : null;
+      console.log(user.value)
+      if (!user.value) {
+        // 使用浏览器原生弹窗提示无法从令牌中获取用户信息
+        window.alert('无法从令牌中获取用户信息');
+      }
+    } catch (err) {
+      // 使用浏览器原生弹窗提示解析令牌失败
+      window.alert('解析令牌失败，请重新登录');
+      console.error('Failed to parse token:', err);
+    } finally {
+      loading.value = false;
+    }
+  }
+};
+
+onMounted(fetchUserInfo);
+watch(hasAccessToken, fetchUserInfo);
 </script>

@@ -14,7 +14,7 @@
             <v-list-item :to="'/'" link title="官网首页" prepend-icon="mdi-home-outline"></v-list-item>
             <v-list-item :to="'/projects'" link title="项目列表" prepend-icon="mdi-view-list-outline"></v-list-item>
             <v-list-item :to="'/docs'" link title="文档中心" prepend-icon="mdi-file-document-outline"></v-list-item>
-            <v-list-item v-if="appStore.user" :to="'/user'" link title="用户系统" prepend-icon="mdi-account-outline"></v-list-item>
+            <v-list-item v-if="appStore.accessToken" :to="'/user'" link title="用户系统" prepend-icon="mdi-account-outline"></v-list-item>
         </v-list>
     </v-navigation-drawer>
 </template>
@@ -32,7 +32,7 @@ let drawer = ref(true);
 // 根据登录状态显示不同菜单项
 const menuItems = computed(() => [
   { title: '文档中心', link: 'https://docs.3r60.top', icon: 'mdi-help-circle-outline' },
-  ...(appStore.user ? [
+  ...(appStore.accessToken ? [
     { title: '用户中心', link: '/user', icon: 'mdi-account-circle' },
     { title: '退出登录', action: 'logout', icon: 'mdi-logout' }
   ] : [

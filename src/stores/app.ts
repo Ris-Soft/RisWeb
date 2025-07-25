@@ -3,16 +3,16 @@ import { defineStore } from 'pinia'
 
 export const useAppStore = defineStore('app', {
   state: () => ({
-    user: JSON.parse(localStorage.getItem('casdoor_user') || 'null')
-  }),
+  accessToken: localStorage.getItem('casdoor_access_token') || null
+}),
   actions: {
-    setUser(user: any) {
-      this.user = user;
-      localStorage.setItem('casdoor_user', JSON.stringify(user));
+    setToken(token: string) {
+      this.accessToken = token;
+      localStorage.setItem('casdoor_access_token', token);
     },
     clearUser() {
-      this.user = null;
-      localStorage.removeItem('casdoor_user');
+      this.accessToken = null;
+      localStorage.removeItem('casdoor_access_token');
     }
   }
 })
